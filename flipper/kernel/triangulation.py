@@ -110,7 +110,7 @@ class Triangle:
     It builds its corners automatically. '''
     
     # Warning: This needs to be updated if the interals of this class ever change.
-    __slots__ = ['edges', 'labels', 'indices', 'vertices', 'corners']
+    __slots__ = ['edges', 'labels', 'indices', 'vertices', 'corners', 'index']
     
     def __init__(self, edges):
         assert isinstance(edges, (list, tuple))
@@ -127,6 +127,7 @@ class Triangle:
         self.indices = [edge.index for edge in self]
         self.vertices = [self.edges[1].target_vertex, self.edges[2].target_vertex, self.edges[0].target_vertex]
         self.corners = [Corner(self, i) for i in range(3)]
+        self.index = None
     
     def __repr__(self):
         return str(self)
@@ -213,6 +214,8 @@ class Triangulation:
         # We will sort the triangles into a canonical ordering, the one where the edges are ordered
         # minimally by label. This allows for fast comparisons.
         self.triangles = sorted(triangles, key=lambda t: [e.label for e in t])
+        for e, T in enumerate(self.triangles):
+            T.index = e
         
         self.edges = [edge for triangle in self for edge in triangle.edges]
         self.positive_edges = [edge for edge in self.edges if edge.is_positive()]
