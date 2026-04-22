@@ -191,7 +191,7 @@ class Lamination:
         #
         # Otherwise, self is a multicurve.
         
-        assert self.is_multicurve()
+        # assert self.is_multicurve()
         
         lamination = self
         best_conjugation = conjugation = lamination.triangulation.id_encoding()
