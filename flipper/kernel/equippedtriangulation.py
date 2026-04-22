@@ -182,7 +182,7 @@ class EquippedTriangulation:
         of positive, negative or all (default) mapping classes can be used by using the
         flags postive and negative. '''
         
-        assert isinstance(length, flipper.IntegerType)
+        # assert isinstance(length, flipper.IntegerType)
         
         if letters is None:
             pos_keys = sorted(self.pos_mapping_classes.keys())

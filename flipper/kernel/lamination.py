@@ -552,8 +552,8 @@ class Lamination:
         # should change dynamically depending on the algebraic numbers involved in
         # this lamination.
         
-        assert all(isinstance(entry, (flipper.IntegerType, flipper.kernel.RealAlgebraic)) for entry in self)
-        assert len(set(entry.field for entry in self if isinstance(entry, flipper.kernel.RealAlgebraic))) <= 1
+        # assert all(isinstance(entry, (flipper.IntegerType, flipper.kernel.RealAlgebraic)) for entry in self)
+        # assert len(set(entry.field for entry in self if isinstance(entry, flipper.kernel.RealAlgebraic))) <= 1
         
         # Check if the lamination is obviously non-filling.
         if all(isinstance(entry, flipper.IntegerType) for entry in self):

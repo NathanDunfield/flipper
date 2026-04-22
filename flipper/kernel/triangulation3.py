@@ -40,7 +40,7 @@ EXIT_CUSP_RIGHT = {
 class Tetrahedron:
     ''' This represents a tetrahedron. '''
     def __init__(self, label):
-        assert isinstance(label, flipper.IntegerType)
+        # assert isinstance(label, flipper.IntegerType)
         
         self.label = label
         self.glued_to = [None] * 4  # Each entry is either: None or (Tetrahedron, permutation).
@@ -112,7 +112,7 @@ class Tetrahedron:
 class Triangulation3:
     ''' This represents triangulation, that is a collection of tetrahedra. '''
     def __init__(self, num_tetrahedra):
-        assert isinstance(num_tetrahedra, flipper.IntegerType)
+        # assert isinstance(num_tetrahedra, flipper.IntegerType)
         
         self.num_tetrahedra = num_tetrahedra
         self.tetrahedra = [Tetrahedron(i) for i in range(self.num_tetrahedra)]

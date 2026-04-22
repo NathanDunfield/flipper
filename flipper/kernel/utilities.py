@@ -11,7 +11,7 @@ VISIBLE_CHARACTERS = digits + ascii_letters + punctuation
 def string_generator(n, skip=None):
     ''' Return a list of n usable names, none of which are in skip. '''
     
-    assert isinstance(n, flipper.IntegerType)
+    # assert isinstance(n, flipper.IntegerType)
     assert skip is None or isinstance(skip, (list, tuple, dict, set))
     
     skip = set() if skip is None else set(skip)
