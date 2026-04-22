@@ -69,7 +69,7 @@ class Edge:
         self.source_vertex = source_vertex
         self.target_vertex = target_vertex
         self.label = label
-        self.index = norm(self.label)
+        self.index = max(label, ~label)
         if reversed_edge is None: reversed_edge = Edge(self.target_vertex, self.source_vertex, ~self.label, self)
         self.reversed_edge = reversed_edge
     
