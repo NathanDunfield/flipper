@@ -1011,40 +1011,44 @@ class Triangulation:
                 geometric = [2*geometric[i] - sum(peripheral[v] for v in self.vertices_of_edge(i)) for i in range(self.zeta)]
                 if all(entry % 2 == 0 for entry in geometric):
                     geometric = [entry // 2 for entry in geometric]
-        
-        if algebraic is not None:
-            return flipper.kernel.Lamination(self, geometric, algebraic)
-        else:
-            lamination = flipper.kernel.Lamination(self, geometric, [0] * self.zeta)
-            # If we have a curve we should compute the algebraic intersection numbers.
-            # Note that if the curve is not twistable then its algebraic intersection numbers
-            # are all zero and so we can just return lamination.
-            if lamination.is_curve() and lamination.is_twistable():
-                conjugation = lamination.conjugate_short()
-                short_lamination = conjugation(lamination)
-                triangulation = short_lamination.triangulation
+
+        # Computing algebraic intersections numbers is extermely slow, so let's disable it.
+
+        return flipper.kernel.Lamination(self, geometric, [0] * self.zeta)
+        #
+        # if algebraic is not None:
+        #     return flipper.kernel.Lamination(self, geometric, algebraic)
+        # else:
+        #     lamination = flipper.kernel.Lamination(self, geometric, [0] * self.zeta)
+        #     # If we have a curve we should compute the algebraic intersection numbers.
+        #     # Note that if the curve is not twistable then its algebraic intersection numbers
+        #     # are all zero and so we can just return lamination.
+        #     if lamination.is_curve() and lamination.is_twistable():
+        #         conjugation = lamination.conjugate_short()
+        #         short_lamination = conjugation(lamination)
+        #         triangulation = short_lamination.triangulation
                 
-                # Grab the indices of the two edges we meet.
-                e1, e2 = [edge_index for edge_index in range(short_lamination.zeta) if short_lamination(edge_index) > 0]
+        #         # Grab the indices of the two edges we meet.
+        #         e1, e2 = [edge_index for edge_index in range(short_lamination.zeta) if short_lamination(edge_index) > 0]
                 
-                a, b, c, d = triangulation.square_about_edge(e1)
-                # If the curve is going vertically through the square then ...
-                if short_lamination(a) == 1 and short_lamination(c) == 1:
-                    # swap the labels round so it goes horizontally.
-                    e1, e2 = e2, e1
-                    a, b, c, d = triangulation.square_about_edge(e1)
-                elif short_lamination(b) == 1 and short_lamination(d) == 1:
-                    pass
+        #         a, b, c, d = triangulation.square_about_edge(e1)
+        #         # If the curve is going vertically through the square then ...
+        #         if short_lamination(a) == 1 and short_lamination(c) == 1:
+        #             # swap the labels round so it goes horizontally.
+        #             e1, e2 = e2, e1
+        #             a, b, c, d = triangulation.square_about_edge(e1)
+        #         elif short_lamination(b) == 1 and short_lamination(d) == 1:
+        #             pass
                 
-                # Currently short_lamination.algebraic == [0, 0, ..., 0].
-                # So we need to build a new short_lamination with the correct algebraic intersection numbers.
-                geometric = short_lamination.geometric
-                algebraic = [1 if i == e1 else -b.sign() if i == b.index else 0 for i in range(self.zeta)]
+        #         # Currently short_lamination.algebraic == [0, 0, ..., 0].
+        #         # So we need to build a new short_lamination with the correct algebraic intersection numbers.
+        #         geometric = short_lamination.geometric
+        #         algebraic = [1 if i == e1 else -b.sign() if i == b.index else 0 for i in range(self.zeta)]
                 
-                new_short_lamination = flipper.kernel.Lamination(triangulation, geometric, algebraic)
-                return conjugation.inverse()(new_short_lamination)
-            else:
-                return lamination
+        #         new_short_lamination = flipper.kernel.Lamination(triangulation, geometric, algebraic)
+        #         return conjugation.inverse()(new_short_lamination)
+        #     else:
+        #         return lamination
     
     def empty_lamination(self):
         ''' Return an empty lamination on this surface. '''
